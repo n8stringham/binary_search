@@ -220,7 +220,7 @@ def argmin(f, lo, hi, epsilon=1e-3):
 
     # m1 < m2
     m1 = lo + (hi - lo) / 3
-    m2 = lo + (hi - lo) / 3*2
+    m2 = lo + (hi - lo) / 3 * 2
 
     # function values at each point
     f_lo = f(lo)
