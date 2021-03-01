@@ -93,8 +93,6 @@ def find_left_bound(xs, x):
     >>> find_left_bound([1, 1, 1, 1, 1, 1, 1, 1, 1, 1],1)
     0
     '''
-    if len(xs) == 0:
-        return 0
 
     def search(left, right):
         # base case
@@ -116,15 +114,12 @@ def find_left_bound(xs, x):
             left = mid + 1
 
         if xs[mid] == x:
-            while mid - 1 >= 0:
-                if xs[mid - 1] == x:
-                    mid -= 1
-                else:
-                    return mid
-
-            return mid
+            right = mid
 
         return search(left, right)
+
+    if len(xs) == 0:
+        return 0
 
     return search(0, len(xs) - 1)
 
@@ -141,8 +136,6 @@ def find_right_bound(xs, x):
     >>> find_right_bound([3, 2, 1, 0], 5)
     0
     '''
-    if len(xs) == 0:
-        return len(xs)
 
     def search(left, right):
         # base case
@@ -158,16 +151,13 @@ def find_right_bound(xs, x):
         if xs[mid] < x:
             right = mid
 
-        if xs[mid] > x:
+        if xs[mid] >= x:
             left = mid + 1
 
-        if xs[mid] == x:
-            while mid + 1 < len(xs) and xs[mid + 1] == x:
-                mid += 1
-
-            return mid + 1
-
         return search(left, right)
+
+    if len(xs) == 0:
+        return len(xs)
 
     return search(0, len(xs) - 1)
 
@@ -261,8 +251,6 @@ def find_boundaries(f):
         you're done; return lo,hi
     '''
     def search(lo, hi):
-        lo = -1
-        hi = 1
         mid = (lo + hi) / 2
         if f(lo) > f(mid):
             lo *= 2
@@ -272,6 +260,8 @@ def find_boundaries(f):
             return search(lo, hi)
         else:
             return (lo, hi)
+
+    return search(-1, 1)
 
 
 def argmin_simple(f, epsilon=1e-3):
